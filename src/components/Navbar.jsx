@@ -1,7 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../provider/AuthProvider";
+import { FaRegUserCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const { user, logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  console.log(user);
+
   const links = (
     <>
       <li>
@@ -20,14 +28,20 @@ const Navbar = () => {
       <li>
         <NavLink to={"/myDonation"}>My Donations</NavLink>
       </li>
-      <li>
-        <NavLink to={"/login"}>Log In</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/register"}>Register</NavLink>
-      </li>
     </>
   );
+
+  const handleSignOut = () => {
+    logOutUser()
+      .then(() => {
+        toast.success("logged out");
+        navigate("/login");
+      })
+      .catch(() => {
+        toast.error("something error");
+      });
+  };
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -62,7 +76,42 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {!user ? (
+          <div className="space-x-2">
+            <NavLink
+              className="btn hover:bg-white hover:text-[#8A2BE2] hover:font-bold"
+              to={"/login"}
+            >
+              Log In
+            </NavLink>
+
+            <NavLink
+              className="btn hover:bg-white hover:text-[#8A2BE2] hover:font-bold"
+              to={"/register"}
+            >
+              Register
+            </NavLink>
+          </div>
+        ) : (
+          <div className="flex items-center gap-5">
+            {user.photoURL ? (
+              <div className="w-[40px]">
+                <img className="rounded-full" src={user.photoURL} alt="" />
+              </div>
+            ) : (
+              <div>
+                <FaRegUserCircle className="text-3xl"></FaRegUserCircle>
+              </div>
+            )}
+
+            <button
+              onClick={handleSignOut}
+              className="btn btn-neutral hover:bg-white hover:text-black"
+            >
+              Sign Out
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
