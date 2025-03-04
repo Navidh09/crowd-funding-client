@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { createContext } from "react";
 import auth from "../firebase/firebase.init";
@@ -25,6 +26,11 @@ const AuthProvider = ({ children }) => {
   const loginUser = (email, password) => {
     setLoader(true);
     return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const userProfile = (userDetail) => {
+    setLoader(true);
+    return updateProfile(auth.currentUser, userDetail);
   };
 
   const googleLogin = (provider) => {
@@ -57,6 +63,7 @@ const AuthProvider = ({ children }) => {
     user,
     logOutUser,
     loader,
+    userProfile,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

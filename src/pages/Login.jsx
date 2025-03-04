@@ -5,10 +5,13 @@ import { AuthContext } from "../provider/AuthProvider";
 import { toast } from "react-toastify";
 import { GoogleAuthProvider } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const Login = () => {
   const { loginUser, errorMessage, setErrorMessage, setUser, googleLogin } =
     useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
 
@@ -45,7 +48,7 @@ const Login = () => {
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <h1 className="text-5xl font-bold ml-3 mt-3">Login now!</h1>
         <form onSubmit={handleLogin} className="card-body">
-          <fieldset className="fieldset">
+          <fieldset className="fieldset relative">
             <label className="fieldset-label">Email</label>
             <input
               type="email"
@@ -55,11 +58,21 @@ const Login = () => {
             />
             <label className="fieldset-label">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               className="input"
               placeholder="Password"
             />
+            <div
+              className="absolute top-25 right-6 btn-sm btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <IoEyeOffOutline className="text-lg"></IoEyeOffOutline>
+              ) : (
+                <IoEyeOutline className="text-lg"></IoEyeOutline>
+              )}
+            </div>
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>

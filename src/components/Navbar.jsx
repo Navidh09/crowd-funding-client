@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import { FaRegUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -17,17 +17,21 @@ const Navbar = () => {
       </li>
 
       <li>
-        <NavLink to={"/allCampaign"}>All Campaign</NavLink>
+        <NavLink to={"/campaigns"}>All Campaign</NavLink>
       </li>
-      <li>
-        <NavLink to={"/addCampaign"}>Add New Campaign</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/myCampaign"}>My Campaign</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/myDonation"}>My Donations</NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to={"/addCampaign"}>Add New Campaign</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/myCampaign"}>My Campaign</NavLink>
+          </li>
+          <li>
+            <NavLink to={"/myDonation"}>My Donations</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -70,7 +74,9 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Crowdcube</a>
+        <Link to={"/"} className="btn btn-ghost text-xl">
+          Crowdcube
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
@@ -96,10 +102,15 @@ const Navbar = () => {
           <div className="flex items-center gap-5">
             {user.photoURL ? (
               <div className="w-[40px]">
-                <img className="rounded-full" src={user.photoURL} alt="" />
+                <div
+                  className="tooltip tooltip-bottom"
+                  data-tip={user.displayName}
+                >
+                  <img className="rounded-full" src={user.photoURL} alt="" />
+                </div>
               </div>
             ) : (
-              <div>
+              <div className="tooltip tooltip-bottom" data-tip="User">
                 <FaRegUserCircle className="text-3xl"></FaRegUserCircle>
               </div>
             )}

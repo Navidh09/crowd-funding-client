@@ -5,11 +5,15 @@ import { AuthContext } from "../provider/AuthProvider";
 import { toast } from "react-toastify";
 import { GoogleAuthProvider } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
+import { FaEye } from "react-icons/fa";
+import { IoEyeOff } from "react-icons/io5";
 
 const Login = () => {
-  const { registerUser, setUser, googleLogin, setErrorMessage } =
+  const { registerUser, setUser, googleLogin, setErrorMessage, userProfile } =
     useContext(AuthContext);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const googleProvider = new GoogleAuthProvider();
 
   const handleGoogleLogin = () => {
@@ -29,12 +33,27 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const name = e.target.name.value;
+    const photo = e.target.photo.value;
+
+    const details = {
+      displayName: name,
+      photoURL: photo,
+    };
+
+    setErrorMessage(null);
+
     registerUser(email, password)
-      .then(() => {
+      .then((res) => {
+        setUser(res.user);
+        userProfile(details).then(() => {
+          navigate("/");
+        });
+        e.target.reset();
         toast.success("Registration Successful");
-        navigate("/");
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e.message);
         toast.error("Something Wrong");
       });
   };
@@ -43,7 +62,14 @@ const Login = () => {
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <h1 className="text-5xl font-bold ml-3 mt-3">Register now!</h1>
         <form onSubmit={handleRegister} className="card-body">
-          <fieldset className="fieldset">
+          <fieldset className="fieldset relative">
+            <label className="fieldset-label">Name</label>
+            <input
+              type="text"
+              name="name"
+              className="input"
+              placeholder="Name"
+            />
             <label className="fieldset-label">Email</label>
             <input
               type="email"
@@ -51,13 +77,27 @@ const Login = () => {
               className="input"
               placeholder="Email"
             />
+            <label className="fieldset-label">PhotoURL</label>
+            <input
+              type="text"
+              name="photo"
+              className="input"
+              placeholder="photo-URL"
+            />
             <label className="fieldset-label">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
-              className="input"
-              placeholder="Password"
+              placeholder="password"
+              className="input input-bordered"
+              required
             />
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-5 btn btn-sm top-60"
+            >
+              {!showPassword ? <FaEye></FaEye> : <IoEyeOff></IoEyeOff>}
+            </div>
             <button className="btn btn-neutral mt-4">Register</button>
           </fieldset>
         </form>
