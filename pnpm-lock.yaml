@@ -29,15 +29,15 @@ importers:
       react-router:
         specifier: ^7.2.0
         version: 7.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      react-sweetalert2:
-        specifier: ^0.6.0
-        version: 0.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-toastify:
         specifier: ^11.0.5
         version: 11.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-tooltip:
         specifier: ^5.28.0
         version: 5.28.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      sweetalert2:
+        specifier: ^11.17.2
+        version: 11.17.2
       tailwindcss:
         specifier: ^4.0.9
         version: 4.0.9
@@ -1330,12 +1330,6 @@ packages:
     peerDependenciesMeta:
       react-dom:
         optional: true
-
-  react-sweetalert2@0.6.0:
-    resolution: {integrity: sha512-4MEWGAJamSfoj56m7MUs7IfBnev9wJYs0RayvoHvxshSQeH62iK0N/EkDiHr3VuZ3vTy34kOpzL1Yg3b3VYF8w==}
-    peerDependencies:
-      react: ^18.2.0
-      react-dom: ^18.2.0
 
   react-toastify@11.0.5:
     resolution: {integrity: sha512-EpqHBGvnSTtHYhCPLxML05NLY2ZX0JURbAdNYa6BUkk+amz4wbKBQvoKQAB0ardvSarUBuY4Q4s1sluAzZwkmA==}
@@ -2794,12 +2788,6 @@ snapshots:
       turbo-stream: 2.4.0
     optionalDependencies:
       react-dom: 19.0.0(react@19.0.0)
-
-  react-sweetalert2@0.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
-    dependencies:
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      sweetalert2: 11.17.2
 
   react-toastify@11.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:

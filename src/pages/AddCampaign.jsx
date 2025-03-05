@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const AddCampaign = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +16,36 @@ const AddCampaign = () => {
     const taka = e.target.taka.value;
     const description = e.target.description.value;
 
-    console.log(title, type, name, photo, date, email, taka, description);
+    const newCampaign = {
+      title,
+      type,
+      photo,
+      name,
+      email,
+      date,
+      taka,
+      description,
+    };
+    console.log(newCampaign);
+
+    fetch("http://localhost:4000/campaignDetails", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newCampaign),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Campaign Added Successful",
+            icon: "success",
+            draggable: true,
+          });
+        }
+      });
   };
   return (
     <div className="w-11/12 mx-auto pt-10">
@@ -32,6 +62,7 @@ const AddCampaign = () => {
             name="title"
             placeholder="campaign title"
             className="input input-lg w-3/4"
+            required
           />
         </div>
         <div className="w-3/4 mx-auto md:flex gap-4 mb-2">
@@ -42,6 +73,7 @@ const AddCampaign = () => {
             <select
               name="type"
               className="select select-bordered w-full input-lg"
+              required
             >
               <option disabled selected>
                 Select One
@@ -61,6 +93,7 @@ const AddCampaign = () => {
               name="taka"
               placeholder="BDT"
               className="input input-lg w-full font-semibold"
+              required
             />
           </div>
         </div>
@@ -72,18 +105,26 @@ const AddCampaign = () => {
               name="photo"
               placeholder="enter photo-URL here"
               className="input input-lg w-full"
+              required
             />
           </div>
           <div className="w-full">
             <legend className="fieldset-legend mb-1 text-xl">
               Deadline Date :
             </legend>
-            <input type="date" name="date" className="w-full input-lg input" />
+            <input
+              type="date"
+              name="date"
+              className="w-full input-lg input"
+              required
+            />
           </div>
         </div>
         <div className="w-3/4 mx-auto md:flex gap-4 mb-2">
           <div className="w-full">
-            <legend className="fieldset-legend mb-1 text-xl">Username :</legend>
+            <legend className="fieldset-legend mb-1 text-xl">
+              User Email :
+            </legend>
             <input
               type="text"
               name="email"
@@ -110,6 +151,7 @@ const AddCampaign = () => {
             name="description"
             className="textarea w-full"
             placeholder="write description here"
+            required
           ></textarea>
         </div>
         <input
