@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log(user);
+  // console.log(user);
 
   const links = (
     <>
@@ -74,7 +74,7 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <Link to={"/"} className="btn btn-ghost text-xl">
+        <Link to={"/"} className="btn btn-ghost text-3xl text-[#8A2BE2]">
           Crowdcube
         </Link>
       </div>

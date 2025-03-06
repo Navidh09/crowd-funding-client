@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import { toast } from "react-toastify";
 import { GoogleAuthProvider } from "firebase/auth";
@@ -14,14 +14,30 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
+  const location = useLocation();
 
   const handleGoogleLogin = () => {
     setErrorMessage(null);
     googleLogin(googleProvider)
       .then((res) => {
         setUser(res.user);
+        fetch("http://localhost:4000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(res.user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
         toast.success("Login Successful");
-        navigate("/");
+        if (location.state) {
+          navigate(location.state);
+        } else {
+          navigate("/");
+        }
       })
       .catch(() => {
         toast.error("Something Wrong");
@@ -36,8 +52,23 @@ const Login = () => {
     loginUser(email, password)
       .then((res) => {
         setUser(res.user);
+        fetch("http://localhost:4000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(res.user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
         toast.success("Login Successful");
-        navigate("/");
+        if (location.state) {
+          navigate(location.state);
+        } else {
+          navigate("/");
+        }
       })
       .catch(() => {
         setErrorMessage("Wrong email or password");

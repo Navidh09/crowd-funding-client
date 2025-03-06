@@ -28,7 +28,7 @@ const AddCampaign = () => {
     };
     console.log(newCampaign);
 
-    fetch("http://localhost:4000/campaignDetails", {
+    fetch("http://localhost:4000/campaigns", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -78,10 +78,10 @@ const AddCampaign = () => {
               <option disabled selected>
                 Select One
               </option>
-              <option value={"personalIssue"}>Personal Issue</option>
-              <option value={"startup"}>Startup</option>
-              <option value={"business"}>Business</option>
-              <option value={"creativeIdeas"}>Creative Ideas</option>
+              <option value={"Personal Issue"}>Personal Issue</option>
+              <option value={"Startup"}>Startup</option>
+              <option value={"Business"}>Business</option>
+              <option value={"Creative Ideas"}>Creative Ideas</option>
             </select>
           </div>
           <div className="w-full">

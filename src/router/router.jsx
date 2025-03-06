@@ -36,14 +36,18 @@ const router = createBrowserRouter([
             <CampaignDetails></CampaignDetails>
           </PrivateRoute>
         ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:4000/campaign/${params.id}`),
       },
       {
         path: "/campaigns",
         element: <Campaigns></Campaigns>,
+        loader: () => fetch("http://localhost:4000/campaigns"),
       },
       {
         path: "/myCampaign",
         element: <MyCampaign></MyCampaign>,
+        loader: () => fetch("http://localhost:4000/myCampaign"),
       },
       {
         path: "/myDonation",
