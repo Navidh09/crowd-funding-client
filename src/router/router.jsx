@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch("http://localhost:4000/campaigns6"),
+        loader: () => fetch("crowd-funding-server-ruby.vercel.app/campaigns6"),
       },
       {
         path: "/addCampaign",
@@ -39,23 +39,24 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:4000/campaign/${params.id}`),
+          fetch(`crowd-funding-server-ruby.vercel.app/campaign/${params.id}`),
       },
       {
         path: "/campaigns",
         element: <Campaigns></Campaigns>,
-        loader: () => fetch("http://localhost:4000/campaigns"),
+        loader: () => fetch("crowd-funding-server-ruby.vercel.app/campaigns"),
       },
       {
         path: "/myCampaign",
         element: <MyCampaign></MyCampaign>,
-        loader: () => fetch("http://localhost:4000/myCampaign"),
+        loader: () => fetch("crowd-funding-server-ruby.vercel.app/myCampaign"),
       },
       {
         path: "/update/:id",
         element: <UpdateCampaigns></UpdateCampaigns>,
         loader: ({ params }) =>
-          fetch(`http://localhost:4000/update/${params.id}`),
+          fetch(`crowd-funding-server-ruby.vercel.app/
+update/${params.id}`),
       },
       {
         path: "/myDonation",
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
             <MyDonation></MyDonation>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:4000/donations"),
+        loader: () => fetch("crowd-funding-server-ruby.vercel.app/donations"),
       },
       {
         path: "/login",

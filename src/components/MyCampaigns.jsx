@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 const MyCampaigns = ({ campaign, campaigns, setCampaigns, idx }) => {
   const { title, type, date, _id } = campaign;
 
-  console.log("hi");
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -17,9 +16,13 @@ const MyCampaigns = ({ campaign, campaigns, setCampaigns, idx }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:4000/campaign/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `crowd-funding-server-ruby.vercel.app
+/campaign/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {

@@ -27,7 +27,7 @@ const AddCampaign = () => {
       description,
     };
 
-    fetch("http://localhost:4000/campaigns", {
+    fetch("crowd-funding-server-ruby.vercel.app/campaigns", {
       method: "POST",
       headers: {
         "content-type": "application/json",

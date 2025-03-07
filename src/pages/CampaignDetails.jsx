@@ -32,7 +32,7 @@ const CampaignDetails = () => {
         confirmButtonText: "Yes, donate!",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch("http://localhost:4000/donations", {
+          fetch("crowd-funding-server-ruby.vercel.app/donations", {
             method: "POST",
             headers: {
               "content-type": "application/json",
