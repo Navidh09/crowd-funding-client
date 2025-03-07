@@ -1,13 +1,15 @@
 import { useLoaderData } from "react-router";
 import MyCampaigns from "../components/MyCampaigns";
+import { useState } from "react";
 
 const MyCampaign = () => {
-  const campaigns = useLoaderData();
+  const loadCampaigns = useLoaderData();
+  const [campaigns, setCampaigns] = useState(loadCampaigns);
 
   return (
     <div>
       <h1 className="text-center mt-10 text-4xl font-semibold text-[#8A2BE2] underline">
-        All Campaigns
+        My Campaigns
       </h1>
       <div className="overflow-x-auto border rounded-box bg-base-300 w-11/12 mx-auto mt-10">
         <table className="table">
@@ -22,7 +24,12 @@ const MyCampaign = () => {
           </thead>
           <tbody>
             {campaigns.map((campaign) => (
-              <MyCampaigns campaign={campaign} key={campaign._id}></MyCampaigns>
+              <MyCampaigns
+                campaign={campaign}
+                campaigns={campaigns}
+                setCampaigns={setCampaigns}
+                key={campaign._id}
+              ></MyCampaigns>
             ))}
           </tbody>
         </table>

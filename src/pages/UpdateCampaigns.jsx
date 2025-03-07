@@ -54,7 +54,7 @@ const UpdateCampaigns = () => {
   return (
     <div className="w-11/12 mx-auto pt-10">
       <h4 className="text-3xl font-bold pb-10 text-center text-[#8A2BE2]">
-        Update Campaign
+        Campaign Name: <span className="text-red-500">{title}</span>
       </h4>
       <form onSubmit={handleUpdateCampaign} className="w-full text-center">
         <div className="mb-2">
