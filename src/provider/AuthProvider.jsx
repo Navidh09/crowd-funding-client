@@ -19,12 +19,10 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const registerUser = (email, password) => {
-    setLoader(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const loginUser = (email, password) => {
-    setLoader(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -34,7 +32,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const googleLogin = (provider) => {
-    setLoader(true);
     return signInWithPopup(auth, provider);
   };
 
@@ -64,6 +61,7 @@ const AuthProvider = ({ children }) => {
     logOutUser,
     loader,
     userProfile,
+    setLoader,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

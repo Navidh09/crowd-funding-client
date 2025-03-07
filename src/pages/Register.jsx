@@ -1,4 +1,3 @@
-import React from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
@@ -9,9 +8,16 @@ import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 
-const Login = () => {
-  const { registerUser, setUser, googleLogin, setErrorMessage, userProfile } =
-    useContext(AuthContext);
+const Register = () => {
+  const {
+    registerUser,
+    setUser,
+    googleLogin,
+    setErrorMessage,
+    errorMessage,
+    userProfile,
+    setLoader,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const googleProvider = new GoogleAuthProvider();
@@ -36,6 +42,20 @@ const Login = () => {
     const name = e.target.name.value;
     const photo = e.target.photo.value;
 
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setErrorMessage("Password must contain at least one uppercase letter.");
+      return;
+    }
+    if (!/[a-z]/.test(password)) {
+      return setErrorMessage(
+        "Password must contain at least one lowercase letter."
+      );
+    }
+
     const details = {
       displayName: name,
       photoURL: photo,
@@ -47,13 +67,13 @@ const Login = () => {
       .then((res) => {
         setUser(res.user);
         userProfile(details).then(() => {
+          setLoader(false);
+          toast.success("Registration Successful");
           navigate("/");
         });
         e.target.reset();
-        toast.success("Registration Successful");
       })
-      .catch((e) => {
-        console.log(e.message);
+      .catch(() => {
         toast.error("Something Wrong");
       });
   };
@@ -101,6 +121,7 @@ const Login = () => {
             <button className="btn btn-neutral mt-4">Register</button>
           </fieldset>
         </form>
+        <p className="text-red-600 text-center -mt-5">{errorMessage}</p>
         <div className="text-center mb-4">
           <button
             onClick={handleGoogleLogin}
@@ -123,4 +144,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

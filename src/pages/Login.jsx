@@ -9,8 +9,14 @@ import { useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 const Login = () => {
-  const { loginUser, errorMessage, setErrorMessage, setUser, googleLogin } =
-    useContext(AuthContext);
+  const {
+    loginUser,
+    errorMessage,
+    setErrorMessage,
+    setUser,
+    googleLogin,
+    setLoader,
+  } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
@@ -40,15 +46,17 @@ const Login = () => {
     const password = e.target.password.value;
     loginUser(email, password)
       .then((res) => {
+        setLoader(false);
         setUser(res.user);
         toast.success("Login Successful");
         if (location.state) {
           navigate(location.state);
         } else {
+          setLoader(false);
           navigate("/");
         }
       })
-      .catch(() => {
+      .catch((e) => {
         setErrorMessage("Wrong email or password");
       });
   };
@@ -85,7 +93,11 @@ const Login = () => {
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>
-            <button className="btn btn-neutral mt-4">Login</button>
+            <input
+              className="btn btn-neutral mt-4"
+              type="submit"
+              value="Login"
+            />
           </fieldset>
 
           <div className="text-red-500 ml-3">
