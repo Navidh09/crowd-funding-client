@@ -9,6 +9,9 @@ const CampaignDetails = () => {
 
   const { date, description, title, taka, type, photo, email, name, _id } =
     singleCampaign;
+
+  const presentDate = new Date().toISOString();
+
   const handleDonate = () => {
     const donation = {
       title,
@@ -18,35 +21,43 @@ const CampaignDetails = () => {
       photo,
       email: user.email,
     };
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, donate!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch("http://localhost:4000/donations", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(donation),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.insertedId) {
-              Swal.fire({
-                title: "Success!",
-                text: "Your donation has been completed.",
-                icon: "success",
-              });
-            }
-          });
-      }
-    });
+    if (presentDate < date) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, donate!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch("http://localhost:4000/donations", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(donation),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                Swal.fire({
+                  title: "Success!",
+                  text: "Your donation has been completed.",
+                  icon: "success",
+                });
+              }
+            });
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Donation time is EXPIRED!",
+      });
+    }
   };
 
   return (

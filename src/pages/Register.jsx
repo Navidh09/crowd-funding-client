@@ -78,7 +78,7 @@ const Register = () => {
       });
   };
   return (
-    <div className="hero bg-base-200 min-h-screen ">
+    <div className="hero bg-base-200 min-h-screen py-10">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <h1 className="text-5xl font-bold ml-3 mt-3">Register now!</h1>
         <form onSubmit={handleRegister} className="card-body">
