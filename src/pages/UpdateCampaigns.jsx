@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
-import { Navigate, useLoaderData, useNavigate } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const UpdateCampaigns = () => {
@@ -31,24 +31,33 @@ const UpdateCampaigns = () => {
       name,
       email,
     };
-    fetch(`http://localhost:4000/update/${_id}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updateCampaign),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount) {
-          navigate("/myCampaign");
-          Swal.fire({
-            title: "Campaign Updated Successful",
-            icon: "success",
-            draggable: true,
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        fetch(`http://localhost:4000/update/${_id}`, {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(updateCampaign),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.modifiedCount) {
+              navigate("/myCampaign");
+              Swal.fire("Saved!", "", "success");
+            }
           });
-        }
-      });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
 
   return (

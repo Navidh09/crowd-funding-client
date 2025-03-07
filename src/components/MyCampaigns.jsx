@@ -24,7 +24,6 @@ const MyCampaigns = ({ campaign, campaigns, setCampaigns }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             if (data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",

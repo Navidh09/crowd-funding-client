@@ -21,17 +21,6 @@ const Login = () => {
     googleLogin(googleProvider)
       .then((res) => {
         setUser(res.user);
-        fetch("http://localhost:4000/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(res.user),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          });
         toast.success("Login Successful");
         if (location.state) {
           navigate(location.state);
@@ -52,17 +41,6 @@ const Login = () => {
     loginUser(email, password)
       .then((res) => {
         setUser(res.user);
-        fetch("http://localhost:4000/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(res.user),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          });
         toast.success("Login Successful");
         if (location.state) {
           navigate(location.state);
