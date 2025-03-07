@@ -14,7 +14,7 @@ const Campaigns = () => {
           {/* head */}
           <thead>
             <tr className="border-2 border-black">
-              <th>Sl No.</th>
+              <th>#</th>
               <th>Campaign Title</th>
               <th>Campaign Type</th>
               <th>Deadline Date</th>

@@ -1,10 +1,13 @@
 import { useLoaderData } from "react-router";
 import MyCampaigns from "../components/MyCampaigns";
 import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
 
 const MyCampaign = () => {
   const loadCampaigns = useLoaderData();
   const [campaigns, setCampaigns] = useState(loadCampaigns);
+  const { user } = useContext(AuthContext);
 
   return (
     <div>
@@ -16,6 +19,7 @@ const MyCampaign = () => {
           {/* head */}
           <thead>
             <tr className="border-2 border-black">
+              <th>#</th>
               <th>Campaign Title</th>
               <th>Campaign Type</th>
               <th>Deadline Date</th>
@@ -23,14 +27,17 @@ const MyCampaign = () => {
             </tr>
           </thead>
           <tbody>
-            {campaigns.map((campaign) => (
-              <MyCampaigns
-                campaign={campaign}
-                campaigns={campaigns}
-                setCampaigns={setCampaigns}
-                key={campaign._id}
-              ></MyCampaigns>
-            ))}
+            {campaigns
+              .filter((campaign) => user.email === campaign.email)
+              .map((campaign, idx) => (
+                <MyCampaigns
+                  campaign={campaign}
+                  campaigns={campaigns}
+                  setCampaigns={setCampaigns}
+                  key={campaign._id}
+                  idx={idx}
+                ></MyCampaigns>
+              ))}
           </tbody>
         </table>
       </div>

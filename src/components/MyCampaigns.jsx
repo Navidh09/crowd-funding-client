@@ -1,13 +1,11 @@
-import React from "react";
-import { useContext } from "react";
 import { Link } from "react-router";
-import { AuthContext } from "../provider/AuthProvider";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 
-const MyCampaigns = ({ campaign, campaigns, setCampaigns }) => {
-  const { user } = useContext(AuthContext);
-  const { title, type, date, _id, email } = campaign;
+const MyCampaigns = ({ campaign, campaigns, setCampaigns, idx }) => {
+  const { title, type, date, _id } = campaign;
+
+  console.log("hi");
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -41,23 +39,20 @@ const MyCampaigns = ({ campaign, campaigns, setCampaigns }) => {
   };
 
   return (
-    <>
-      {email === user.email && (
-        <tr className="border border-black">
-          <td>{title}</td>
-          <td>{type}</td>
-          <td>{date}</td>
-          <td className="space-x-1">
-            <Link to={`/update/${_id}`} className="btn-primary btn">
-              <MdModeEdit />
-            </Link>
-            <Link onClick={() => handleDelete(_id)} className="btn-primary btn">
-              <MdDelete />
-            </Link>
-          </td>
-        </tr>
-      )}
-    </>
+    <tr className="border border-black">
+      <td>{idx + 1}</td>
+      <td>{title}</td>
+      <td>{type}</td>
+      <td>{date}</td>
+      <td className="space-x-1">
+        <Link to={`/update/${_id}`} className="btn-primary btn">
+          <MdModeEdit />
+        </Link>
+        <Link onClick={() => handleDelete(_id)} className="btn-primary btn">
+          <MdDelete />
+        </Link>
+      </td>
+    </tr>
   );
 };
 
