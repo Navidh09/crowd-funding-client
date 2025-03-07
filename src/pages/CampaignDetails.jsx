@@ -1,13 +1,10 @@
-import { useLoaderData, useParams } from "react-router";
+import { useLoaderData } from "react-router";
 
 const CampaignDetails = () => {
-  const { id } = useParams();
   const singleCampaign = useLoaderData();
 
   const { date, description, title, taka, type, photo, email, name } =
     singleCampaign;
-
-  console.log(title, id);
 
   return (
     <div className="card bg-base-100 w-screen mx-auto shadow-sm mt-10">

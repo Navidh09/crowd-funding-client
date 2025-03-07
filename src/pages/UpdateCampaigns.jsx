@@ -1,11 +1,17 @@
+import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
+import { Navigate, useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
-const AddCampaign = () => {
+const UpdateCampaigns = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const singleCampaign = useLoaderData();
 
-  const handleAddCampaign = (e) => {
+  const { date, description, title, taka, type, photo, _id } = singleCampaign;
+
+  const handleUpdateCampaign = (e) => {
     e.preventDefault();
     const title = e.target.title.value;
     const type = e.target.type.value;
@@ -15,43 +21,42 @@ const AddCampaign = () => {
     const date = e.target.date.value;
     const taka = e.target.taka.value;
     const description = e.target.description.value;
-
-    const newCampaign = {
+    const updateCampaign = {
       title,
+      date,
+      description,
+      taka,
       type,
       photo,
       name,
       email,
-      date,
-      taka,
-      description,
     };
-
-    fetch("http://localhost:4000/campaigns", {
-      method: "POST",
+    fetch(`http://localhost:4000/update/${_id}`, {
+      method: "PATCH",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newCampaign),
+      body: JSON.stringify(updateCampaign),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data.insertedId) {
+        if (data.modifiedCount) {
+          navigate("/myCampaign");
           Swal.fire({
-            title: "Campaign Added Successful",
+            title: "Campaign Updated Successful",
             icon: "success",
             draggable: true,
           });
         }
       });
   };
+
   return (
     <div className="w-11/12 mx-auto pt-10">
       <h4 className="text-3xl font-bold pb-10 text-center text-[#8A2BE2]">
-        Add New Campaign
+        Update Campaign
       </h4>
-      <form onSubmit={handleAddCampaign} className="w-full text-center">
+      <form onSubmit={handleUpdateCampaign} className="w-full text-center">
         <div className="mb-2">
           <legend className="fieldset-legend w-3/4 mx-auto mb-1 text-xl">
             Title :
@@ -59,6 +64,7 @@ const AddCampaign = () => {
           <input
             type="text"
             name="title"
+            defaultValue={title}
             placeholder="campaign title"
             className="input input-lg w-3/4"
             required
@@ -71,6 +77,7 @@ const AddCampaign = () => {
             </legend>
             <select
               name="type"
+              defaultValue={type}
               className="select select-bordered w-full input-lg"
               required
             >
@@ -90,6 +97,7 @@ const AddCampaign = () => {
             <input
               type="number"
               name="taka"
+              defaultValue={taka}
               placeholder="BDT"
               className="input input-lg w-full font-semibold"
               required
@@ -102,6 +110,7 @@ const AddCampaign = () => {
             <input
               type="text"
               name="photo"
+              defaultValue={photo}
               placeholder="enter photo-URL here"
               className="input input-lg w-full"
               required
@@ -114,6 +123,7 @@ const AddCampaign = () => {
             <input
               type="date"
               name="date"
+              defaultValue={date}
               className="w-full input-lg input"
               required
             />
@@ -129,6 +139,7 @@ const AddCampaign = () => {
               name="email"
               value={user.email}
               className="input input-lg w-full font-semibold"
+              disabled
             />
           </div>
 
@@ -136,6 +147,7 @@ const AddCampaign = () => {
             <legend className="fieldset-legend mb-1 text-xl">Username :</legend>
             <input
               type="text"
+              disabled
               name="name"
               value={user.displayName ? user.displayName : "Unknown User"}
               className="input input-lg w-full font-semibold"
@@ -147,6 +159,7 @@ const AddCampaign = () => {
             Description :
           </legend>
           <textarea
+            defaultValue={description}
             name="description"
             className="textarea w-full"
             placeholder="write description here"
@@ -156,11 +169,11 @@ const AddCampaign = () => {
         <input
           className="btn mt-3 w-3/4 text-xl h-12 hover:bg-[#8A2BE2] hover:text-white text-[#8A2BE2]"
           type="submit"
-          value="Add Campaign"
+          value="Update Campaign"
         />
       </form>
     </div>
   );
 };
 
-export default AddCampaign;
+export default UpdateCampaigns;
