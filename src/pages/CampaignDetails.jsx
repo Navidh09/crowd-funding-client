@@ -89,7 +89,7 @@ const CampaignDetails = () => {
         </p>
         <button
           onClick={handleDonate}
-          className="btn mt-3 w-3/4 text-xl h-12 hover:bg-[#8A2BE2] hover:text-white text-[#8A2BE2]"
+          className="btn btn-block mt-3 text-xl h-12 hover:bg-[#8A2BE2] hover:text-white text-[#8A2BE2]"
         >
           Donate Now
         </button>
