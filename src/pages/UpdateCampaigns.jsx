@@ -40,17 +40,13 @@ const UpdateCampaigns = () => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        fetch(
-          `crowd-funding-server-ruby.vercel.app
-/update/${_id}`,
-          {
-            method: "PATCH",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(updateCampaign),
-          }
-        )
+        fetch(`https://crowd-funding-server-ruby.vercel.app/update/${_id}`, {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(updateCampaign),
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount) {

@@ -15,31 +15,51 @@ const MyCampaign = () => {
         My Campaigns
       </h1>
       <div className="overflow-x-auto border rounded-box bg-base-300 w-11/12 mx-auto mt-10">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr className="border-2 border-black">
-              <th>#</th>
-              <th>Campaign Title</th>
-              <th>Campaign Type</th>
-              <th>Deadline Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {campaigns
-              .filter((campaign) => user.email === campaign.email)
-              .map((campaign, idx) => (
-                <MyCampaigns
-                  campaign={campaign}
-                  campaigns={campaigns}
-                  setCampaigns={setCampaigns}
-                  key={campaign._id}
-                  idx={idx}
-                ></MyCampaigns>
-              ))}
-          </tbody>
-        </table>
+        {loadCampaigns.length === 0 ? (
+          <>
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr className="border-2 border-black">
+                  <th>#</th>
+                  <th>Campaign Title</th>
+                  <th>Campaign Type</th>
+                  <th>Deadline Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+            </table>
+            <p className="text-center py-7 font-bold text-2xl">
+              You did not add any campaign
+            </p>
+          </>
+        ) : (
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr className="border-2 border-black">
+                <th>#</th>
+                <th>Campaign Title</th>
+                <th>Campaign Type</th>
+                <th>Deadline Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {campaigns
+                .filter((campaign) => user.email === campaign.email)
+                .map((campaign, idx) => (
+                  <MyCampaigns
+                    campaign={campaign}
+                    campaigns={campaigns}
+                    setCampaigns={setCampaigns}
+                    key={campaign._id}
+                    idx={idx}
+                  ></MyCampaigns>
+                ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

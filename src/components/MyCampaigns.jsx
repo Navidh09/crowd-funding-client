@@ -16,13 +16,9 @@ const MyCampaigns = ({ campaign, campaigns, setCampaigns, idx }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `crowd-funding-server-ruby.vercel.app
-/campaign/${id}`,
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`https://crowd-funding-server-ruby.vercel.app/campaign/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {

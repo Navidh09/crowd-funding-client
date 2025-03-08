@@ -32,7 +32,7 @@ const CampaignDetails = () => {
         confirmButtonText: "Yes, donate!",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch("crowd-funding-server-ruby.vercel.app/donations", {
+          fetch("https://crowd-funding-server-ruby.vercel.app/donations", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -66,7 +66,7 @@ const CampaignDetails = () => {
         <img
           className="w-2/4 max-h-120 max-w-96"
           src={photo}
-          alt="campaign-title"
+          alt="campaign-image"
         />
       </figure>
       <div className="card-body w-2/4 mx-auto text-xl">

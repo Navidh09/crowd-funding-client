@@ -27,7 +27,7 @@ const AddCampaign = () => {
       description,
     };
 
-    fetch("crowd-funding-server-ruby.vercel.app/campaigns", {
+    fetch("https://crowd-funding-server-ruby.vercel.app/campaigns", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -46,8 +46,8 @@ const AddCampaign = () => {
       });
   };
   return (
-    <div className="w-11/12 mx-auto pt-10">
-      <h4 className="text-3xl font-bold pb-10 text-center text-[#8A2BE2]">
+    <div className="w-11/12 mx-auto">
+      <h4 className="text-center text-4xl my-10 font-semibold text-[#8A2BE2] underline">
         Add New Campaign
       </h4>
       <form onSubmit={handleAddCampaign} className="w-full text-center">

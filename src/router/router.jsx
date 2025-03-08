@@ -21,7 +21,8 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch("crowd-funding-server-ruby.vercel.app/campaigns6"),
+        loader: () =>
+          fetch("https://crowd-funding-server-ruby.vercel.app/campaigns6"),
       },
       {
         path: "/addCampaign",
@@ -39,24 +40,33 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`crowd-funding-server-ruby.vercel.app/campaign/${params.id}`),
+          fetch(
+            `https://crowd-funding-server-ruby.vercel.app/campaign/${params.id}`
+          ),
       },
       {
         path: "/campaigns",
         element: <Campaigns></Campaigns>,
-        loader: () => fetch("crowd-funding-server-ruby.vercel.app/campaigns"),
+        loader: () =>
+          fetch("https://crowd-funding-server-ruby.vercel.app/campaigns"),
       },
       {
         path: "/myCampaign",
-        element: <MyCampaign></MyCampaign>,
-        loader: () => fetch("crowd-funding-server-ruby.vercel.app/myCampaign"),
+        element: (
+          <PrivateRoute>
+            <MyCampaign></MyCampaign>
+          </PrivateRoute>
+        ),
+        loader: () =>
+          fetch("https://crowd-funding-server-ruby.vercel.app/myCampaign"),
       },
       {
         path: "/update/:id",
         element: <UpdateCampaigns></UpdateCampaigns>,
         loader: ({ params }) =>
-          fetch(`crowd-funding-server-ruby.vercel.app/
-update/${params.id}`),
+          fetch(
+            `https://crowd-funding-server-ruby.vercel.app/update/${params.id}`
+          ),
       },
       {
         path: "/myDonation",
@@ -65,7 +75,8 @@ update/${params.id}`),
             <MyDonation></MyDonation>
           </PrivateRoute>
         ),
-        loader: () => fetch("crowd-funding-server-ruby.vercel.app/donations"),
+        loader: () =>
+          fetch("https://crowd-funding-server-ruby.vercel.app/donations"),
       },
       {
         path: "/login",

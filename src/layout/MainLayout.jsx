@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router";
 import Footer from "../components/Footer";
@@ -7,6 +6,7 @@ import { AuthContext } from "../provider/AuthProvider";
 
 const MainLayout = () => {
   const { loader } = useContext(AuthContext);
+
   if (loader) {
     return (
       <h2 className="flex items-center justify-center mt-60">
